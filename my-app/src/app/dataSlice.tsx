@@ -1,13 +1,13 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
-interface SaleDataPoint {
+interface PartialSaleDataPoint {
     weekEnding: string;
     retailSales: number;
     wholesaleSales: number;
   }
   
 interface DataState {
-  chartData: SaleDataPoint[];
+  chartData: PartialSaleDataPoint[];
 }
 
 const initialState: DataState = {
@@ -18,7 +18,7 @@ const dataSlice = createSlice({
   name: 'data',
   initialState,
   reducers: {
-    setChartData: (state, action: PayloadAction<SaleDataPoint[]>) => {
+    setChartData: (state, action: PayloadAction<PartialSaleDataPoint[]>) => {
       state.chartData = action.payload;
     }
   }

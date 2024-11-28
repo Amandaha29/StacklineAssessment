@@ -4,19 +4,29 @@ import { LineChart, Line, XAxis, Tooltip, Legend, ResponsiveContainer } from 're
 import { useDispatch, useSelector } from 'react-redux';
 import { setChartData } from './dataSlice';
 import { RootState } from './store';
-import chartData from './data/stackline_frontend_assessment_data_2021.json';
 
 export default function LineChartSection() {
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    const formattedData = chartData[0].sales.map((saleDataPoint) => ({
-      weekEnding: saleDataPoint.weekEnding,
-      retailSales: saleDataPoint.retailSales,
-      wholesaleSales: saleDataPoint.wholesaleSales
-    }));
-    
-    dispatch(setChartData(formattedData));
+    const fetchData = async () => {
+      try {
+        const response = await fetch('/stackline_frontend_assessment_data_2021.json');
+        const apiData = await response.json();
+
+        const formattedData = apiData[0].sales.map((saleDataPoint: any) => ({
+          weekEnding: saleDataPoint.weekEnding,
+          retailSales: saleDataPoint.retailSales,
+          wholesaleSales: saleDataPoint.wholesaleSales,
+        }));
+
+        dispatch(setChartData(formattedData));
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, [dispatch]);
 
   const data = useSelector((state: RootState) => state.data.chartData);
