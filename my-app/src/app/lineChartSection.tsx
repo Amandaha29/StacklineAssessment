@@ -9,7 +9,6 @@ import chartData from './data/stackline_frontend_assessment_data_2021.json';
 export default function LineChartSection() {
   const dispatch = useDispatch();
 
-  // Dispatch the static data when the app starts
   React.useEffect(() => {
     const formattedData = chartData[0].sales.map((saleDataPoint) => ({
       weekEnding: saleDataPoint.weekEnding,
@@ -34,18 +33,16 @@ export default function LineChartSection() {
     return date.toLocaleDateString('en-US', options);
   };
 
-    // Variable to track the previous label
-    let prevLabel = '';
+  let prevLabel = '';
 
-    const uniqueMonthLabel = (tick: string) => {
-      const currentLabel = formatMonth(tick);
-      if (currentLabel === prevLabel) {
-        return ''; // Hide duplicate month labels
-      }
-      prevLabel = currentLabel; // Update prevLabel
-      return currentLabel; // Show current month label
-    };
-  
+  const uniqueMonthLabel = (tick: string) => {
+    const currentLabel = formatMonth(tick);
+    if (currentLabel === prevLabel) {
+      return '';
+    }
+    prevLabel = currentLabel;
+    return currentLabel;
+  };
 
   return (
     <ResponsiveContainer width="100%" height={400}>
