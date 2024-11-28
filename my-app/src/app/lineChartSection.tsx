@@ -5,6 +5,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setChartData } from './dataSlice';
 import { RootState } from './store';
 
+interface SaleDataPoint {
+  weekEnding: string;
+  retailSales: number;
+  wholesaleSales: number;
+  unitsSold: 887,
+  retailerMargin: 123294
+}
+
 export default function LineChartSection() {
   const dispatch = useDispatch();
 
@@ -14,7 +22,7 @@ export default function LineChartSection() {
         const response = await fetch('/stackline_frontend_assessment_data_2021.json');
         const apiData = await response.json();
 
-        const formattedData = apiData[0].sales.map((saleDataPoint: any) => ({
+        const formattedData = apiData[0].sales.map((saleDataPoint: SaleDataPoint) => ({
           weekEnding: saleDataPoint.weekEnding,
           retailSales: saleDataPoint.retailSales,
           wholesaleSales: saleDataPoint.wholesaleSales,
